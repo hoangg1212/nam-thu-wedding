@@ -1,26 +1,1788 @@
 @import "tailwindcss";
 
+/* =========================================
+   GLOBAL VARIABLES
+========================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ivory: #f9f8ee;
+  --ocean: #31566b;
+  --ocean-light: #587589;
+  --sage: #61726d;
+  --blue-sage: #7a9cac;
+  --rose: #c98792;
+  --champagne: #b8a27d;
+  --soft-blue: #eaf2f5;
+  --blush: #f8f1ee;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--ivory);
+  color: var(--ocean);
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* =========================================
+   FONTS
+========================================= */
+
+.font-wedding,
+.font-script {
+  font-family: var(--font-great-vibes), cursive;
+}
+
+.font-wedding-serif,
+.font-serif {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.wedding-page {
+  width: 100%;
+  overflow: clip;
+}
+
+.section {
+  position: relative;
+  padding: 100px 24px;
+  scroll-margin-top: 70px;
+}
+
+.container {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+}
+
+.section-heading {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.section-heading .eyebrow {
+  color: var(--champagne);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin: 12px 0;
+  color: var(--ocean);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.section-heading .line {
+  width: 80px;
+  height: 1px;
+  margin: 20px auto 0;
+  background: var(--champagne);
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border: 1px solid var(--ocean);
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-decoration: none;
+  transition:
+    background 250ms ease,
+    color 250ms ease,
+    transform 250ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--ocean);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--ocean-light);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ocean);
+}
+
+.btn-outline:hover {
+  background: var(--ocean);
+  color: white;
+}
+
+/* =========================================
+   PRELOADER
+========================================= */
+
+@keyframes weddingLoadingLine {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.loader-line {
+  animation: weddingLoadingLine 1.5s ease-in-out infinite;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.wedding-header {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 5%;
+}
+
+.wedding-header a {
+  text-decoration: none;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  background-color: #587589;
+  background-position: center;
+  background-size: cover;
+  color: white;
+  text-align: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 90px 20px 60px;
+}
+
+.hero-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 5px;
+}
+
+.hero-names {
+  margin: 15px 0;
+  font-size: clamp(76px, 12vw, 155px);
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.hero-date {
+  font-size: 14px;
+  letter-spacing: 5px;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+/* =========================================
+   INVITATION
+========================================= */
+
+.invitation-section {
+  background:
+    radial-gradient(circle at 10% 15%,
+      #eaf2f5,
+      transparent 50%),
+    var(--ivory);
+}
+
+.invitation-card {
+  max-width: 770px;
+  margin-inline: auto;
+  padding: 65px 45px;
+  border: 1px solid #ded3bf;
+  background: #fffefa;
+  box-shadow: 0 20px 65px #31566b0c;
+  text-align: center;
+}
+
+.invitation-card .message {
+  color: var(--sage);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(20px, 3vw, 25px);
+  line-height: 1.85;
+}
+
+.wedding-location {
+  margin-top: 35px;
+  padding-top: 30px;
+  border-top: 1px solid #e4dccd;
+}
+
+.wedding-location h3 {
+  margin-bottom: 14px;
+  color: var(--ocean);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 36px;
+}
+
+.wedding-location p {
+  color: var(--sage);
+  line-height: 1.8;
+}
+
+/* =========================================
+   GALLERY
+========================================= */
+
+.gallery-section {
+  background: linear-gradient(180deg,
+      #eaf2f5 0%,
+      #f9f8ee 100%);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.gallery-item {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+  border: 0;
+  background: #d7e3e4;
+  padding: 0;
+}
+
+.gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+.image-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,
+      #dbe8e7,
+      #f4e9e5);
+  color: var(--sage);
+}
+
+.gallery-modal {
+  position: fixed;
+  z-index: 8000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 70px;
+  background: #10232ef0;
+}
+
+.gallery-modal img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  border: 0;
+  background: transparent;
+  color: white;
+}
+
+/* =========================================
+   LOVE STORY
+========================================= */
+
+.story-section {
+  background: var(--ivory);
+}
+
+.story-list {
+  display: grid;
+  max-width: 800px;
+  gap: 45px;
+  margin-inline: auto;
+}
+
+.story-item {
+  padding-left: 30px;
+  border-left: 2px solid var(--champagne);
+}
+
+.story-item .date {
+  color: var(--rose);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.story-item h3 {
+  color: var(--ocean);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.story-item p {
+  margin-top: 10px;
+  color: var(--sage);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* =========================================
+   WISHES
+========================================= */
+
+.wishes-section {
+  background: linear-gradient(160deg,
+      #f8f1ee,
+      #eaf2f5);
+}
+
+.wish-form {
+  display: grid;
+  max-width: 650px;
+  gap: 16px;
+  margin-inline: auto;
+}
+
+.form-control {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #ded6ca;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffffd9;
+  color: var(--ocean);
+  font-size: 13px;
+}
+
+.form-control:focus {
+  border-color: var(--blue-sage);
+  box-shadow: 0 0 0 3px #7a9cac1c;
+}
+
+.wish-form textarea {
+  min-height: 145px;
+  resize: vertical;
+}
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+.countdown-section {
+  background: var(--ocean);
+  color: white;
+  text-align: center;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 35px;
+}
+
+.countdown-number {
+  color: white;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(50px, 7vw, 85px);
+  line-height: 1;
+}
+
+.countdown-label {
+  margin-top: 12px;
+  color: #e9e9e3;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* =========================================
+   THANK YOU
+========================================= */
+
+.thankyou-section {
+  background: linear-gradient(180deg,
+      var(--blush),
+      var(--ivory));
+  text-align: center;
+}
+
+.thankyou-text {
+  max-width: 720px;
+  margin-inline: auto;
+  color: var(--sage);
+  font-size: 15px;
+  line-height: 2.1;
+}
+
+.thankyou-names {
+  margin-top: 30px;
+  color: var(--rose);
+  font-size: 70px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+  padding: 35px 20px;
+  border-top: 1px solid #e7e2d7;
+  background: var(--ivory);
+  color: var(--sage);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   RESPONSIVE MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 75px 18px;
+  }
+
+  .wedding-header {
+    padding: 18px 22px;
+  }
+
+  .hero-names {
+    font-size: clamp(65px, 17vw, 110px);
+  }
+
+  .hero-subtitle {
+    font-size: 10px;
+    letter-spacing: 3px;
+  }
+
+  .hero-date {
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  .invitation-card {
+    padding: 45px 20px;
+  }
+
+  .gallery-grid {
+    gap: 10px;
+  }
+
+  .gallery-item,
+  .image-placeholder {
+    min-height: 240px;
+  }
+
+  .gallery-modal {
+    padding: 70px 50px;
+  }
+
+  .countdown-grid {
+    gap: 20px;
+  }
+
+  .countdown-grid>div {
+    min-width: 55px;
+  }
+
+  .thankyou-names {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 380px) {
+  .section-heading h2 {
+    font-size: 34px;
+  }
+
+  .gallery-item,
+  .image-placeholder {
+    min-height: 190px;
+  }
+
+  .countdown-grid {
+    gap: 10px;
+  }
+
+  .countdown-number {
+    font-size: 45px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================
+   MUSIC PLAYER - SOFT GLOW
+========================================= */
+
+@keyframes weddingMusicGlow {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: scale(1.07);
+  }
+}
+
+.music-player-glow {
+  animation:
+    weddingMusicGlow 3s ease-in-out infinite;
+}
+
+/* =========================================
+   MUSIC EQUALIZER ANIMATION
+========================================= */
+
+@keyframes weddingMusicEqualizer {
+
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.music-bar {
+  transform-origin: bottom;
+
+  animation-name: weddingMusicEqualizer;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.music-bar-1 {
+  animation-duration: 0.85s;
+  animation-delay: 0s;
+}
+
+.music-bar-2 {
+  animation-duration: 1.1s;
+  animation-delay: 0.18s;
+}
+
+.music-bar-3 {
+  animation-duration: 0.9s;
+  animation-delay: 0.35s;
+}
+
+.music-bar-4 {
+  animation-duration: 1.2s;
+  animation-delay: 0.12s;
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .music-player-glow,
+  .music-bar {
+    animation: none !important;
+  }
+}
+
+
+/* ==================================================
+   GIAI ĐOẠN 2.2
+   WEDDING HEADER + HERO BANNER
+================================================== */
+
+/* ==================================================
+   1. HEADER
+================================================== */
+
+.wedding-header-new {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  color: #fff;
+
+  background: transparent;
+
+  transition:
+    background 0.45s ease,
+    box-shadow 0.45s ease,
+    color 0.45s ease;
+}
+
+.wedding-header-inner {
+  width: min(1380px, 100%);
+  height: 85px;
+
+  margin: 0 auto;
+  padding: 0 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: height 0.4s ease;
+}
+
+/* HEADER AFTER SCROLL */
+
+.wedding-header-new--scrolled,
+.wedding-header-new--open {
+  color: #31566b;
+
+  background: rgba(249, 248, 238, 0.94);
+
+  box-shadow:
+    0 8px 35px rgba(49, 86, 107, 0.08);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-bottom:
+    1px solid rgba(184, 162, 125, 0.18);
+}
+
+.wedding-header-new--scrolled .wedding-header-inner {
+  height: 68px;
+}
+
+/* ==================================================
+   2. HEADER LOGO
+================================================== */
+
+.wedding-header-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: inherit;
+
+  font-family:
+    var(--font-great-vibes),
+    cursive;
+
+  font-size: 40px;
+  line-height: 1;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.wedding-header-logo:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+.wedding-header-logo-heart {
+  font-family:
+    var(--font-cormorant),
+    Georgia,
+    serif;
+
+  font-size: 17px;
+  color: #d9a5ae;
+
+  margin: 0 1px;
+}
+
+/* ==================================================
+   3. DESKTOP NAV
+================================================== */
+
+.wedding-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.wedding-header-link {
+  position: relative;
+
+  color: inherit;
+  text-decoration: none;
+
+  font-family:
+    var(--font-montserrat),
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.045em;
+
+  transition: opacity 0.3s ease;
+}
+
+.wedding-header-link:hover {
+  opacity: 0.75;
+}
+
+.wedding-header-link::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+
+  width: 0;
+  height: 1px;
+
+  background: #c98792;
+
+  transform: translateX(-50%);
+
+  transition: width 0.3s ease;
+}
+
+.wedding-header-link:hover::after {
+  width: 70%;
+}
+
+/* ==================================================
+   4. MOBILE MENU BUTTON
+================================================== */
+
+.wedding-header-menu-button {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid currentColor;
+  border-radius: 50%;
+
+  color: inherit;
+  background: transparent;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.wedding-header-menu-button:hover {
+  transform: scale(1.04);
+}
+
+/* ==================================================
+   5. MOBILE MENU PANEL
+================================================== */
+
+.wedding-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  width: 100%;
+
+  max-height: calc(100svh - 68px);
+
+  overflow-y: auto;
+
+  padding: 20px 28px 28px;
+
+  background:
+    linear-gradient(150deg,
+      #f9f8ee 0%,
+      #f8f1ee 55%,
+      #eaf2f5 100%);
+
+  box-shadow:
+    0 20px 50px rgba(49, 86, 107, 0.12);
+
+  border-top:
+    1px solid rgba(184, 162, 125, 0.18);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-12px);
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.35s ease;
+}
+
+.wedding-mobile-menu--open {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateY(0);
+
+  pointer-events: auto;
+}
+
+.wedding-mobile-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  margin: 8px 0 22px;
+
+  color: #c98792;
+  font-size: 14px;
+}
+
+.wedding-mobile-decoration span:first-child,
+.wedding-mobile-decoration span:last-child {
+  width: 35px;
+  height: 1px;
+
+  background: rgba(184, 162, 125, 0.45);
+}
+
+/* MOBILE LINKS */
+
+.wedding-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 15px 8px;
+
+  color: #31566b;
+
+  border-bottom:
+    1px solid rgba(184, 162, 125, 0.18);
+
+  text-decoration: none;
+
+  font-family:
+    var(--font-cormorant),
+    Georgia,
+    serif;
+
+  font-size: 24px;
+
+  transition:
+    padding-left 0.3s ease,
+    color 0.3s ease;
+}
+
+.wedding-mobile-link:hover {
+  padding-left: 14px;
+  color: #b97882;
+}
+
+.wedding-mobile-number {
+  font-family:
+    var(--font-montserrat),
+    sans-serif;
+
+  font-size: 9px;
+  letter-spacing: 1px;
+
+  color: #b8a27d;
+}
+
+/* MOBILE MENU FOOTER */
+
+.wedding-mobile-footer {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.wedding-mobile-footer p {
+  font-size: 42px;
+  line-height: 1.4;
+
+  color: #31566b;
+}
+
+.wedding-mobile-footer span {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 10px;
+  letter-spacing: 3px;
+
+  color: #b8a27d;
+}
+
+/* ==================================================
+   6. HERO CONTAINER
+================================================== */
+
+.wedding-hero-new {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  background: #587589;
+
+  color: white;
+  text-align: center;
+
+  isolation: isolate;
+}
+
+/* ==================================================
+   7. HERO BACKGROUND
+================================================== */
+
+.wedding-hero-background {
+  position: absolute;
+  inset: 0;
+
+  z-index: -4;
+
+  overflow: hidden;
+}
+
+.wedding-hero-image {
+  position: absolute;
+  inset: -2%;
+
+  background-color: #587589;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  transform: scale(1.02);
+
+  animation:
+    weddingHeroZoom 22s ease-in-out infinite alternate;
+}
+
+@keyframes weddingHeroZoom {
+  from {
+    transform: scale(1.02);
+  }
+
+  to {
+    transform: scale(1.12);
+  }
+}
+
+/* ==================================================
+   8. HERO OVERLAY
+================================================== */
+
+.wedding-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: -3;
+
+  background:
+    linear-gradient(180deg,
+      rgba(15, 38, 49, 0.48) 0%,
+      rgba(21, 43, 53, 0.18) 35%,
+      rgba(21, 43, 53, 0.38) 70%,
+      rgba(15, 38, 49, 0.65) 100%);
+}
+
+.wedding-hero-blue-glow {
+  position: absolute;
+  inset: 0;
+
+  z-index: -2;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(49, 86, 107, 0.06) 0%,
+      rgba(16, 39, 52, 0.23) 100%);
+}
+
+/* ==================================================
+   9. TOP DECORATION
+================================================== */
+
+.wedding-hero-top-decoration {
+  position: absolute;
+
+  top: 125px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  transform: translateX(-50%);
+
+  color: #f3d8d0;
+  font-size: 10px;
+
+  opacity: 0.9;
+}
+
+.wedding-hero-top-decoration span:first-child,
+.wedding-hero-top-decoration span:last-child {
+  width: 45px;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* ==================================================
+   10. HERO MAIN CONTENT
+================================================== */
+
+.wedding-hero-content {
+  position: relative;
+  z-index: 5;
+
+  width: min(100%, 850px);
+
+  padding:
+    150px 24px 140px;
+
+  opacity: 0;
+
+  transform: translateY(22px);
+
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+}
+
+.wedding-hero-content--ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================================================
+   11. SMALL LABEL
+================================================== */
+
+.wedding-hero-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+
+  margin-bottom: 18px;
+}
+
+.wedding-hero-label p {
+  font-size: 11px;
+  font-weight: 500;
+
+  letter-spacing: 0.38em;
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.wedding-hero-small-line {
+  width: 40px;
+  height: 1px;
+
+  background:
+    rgba(245, 226, 207, 0.65);
+}
+
+/* ==================================================
+   12. COUPLE NAMES
+================================================== */
+
+.wedding-hero-couple {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.wedding-hero-name {
+  font-family:
+    var(--font-great-vibes),
+    cursive;
+
+  font-size: clamp(95px, 11vw, 155px);
+  font-weight: 400;
+
+  line-height: 1.35;
+
+  text-shadow:
+    0 7px 28px rgba(0, 0, 0, 0.18);
+}
+
+.wedding-hero-ampersand {
+  align-self: center;
+  margin-top: -10px;
+}
+
+.wedding-hero-ampersand span {
+  font-family:
+    var(--font-cormorant),
+    Georgia,
+    serif;
+
+  font-size: 42px;
+  font-style: italic;
+
+  color: #f2d4cb;
+}
+
+/* ==================================================
+   13. DECORATIVE HEART
+================================================== */
+
+.wedding-hero-heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+
+  margin-top: -5px;
+
+  color: #f2d4cb;
+  font-size: 22px;
+}
+
+.wedding-hero-heart span:first-child,
+.wedding-hero-heart span:last-child {
+  width: 55px;
+  height: 1px;
+
+  background:
+    rgba(255, 255, 255, 0.6);
+}
+
+/* ==================================================
+   14. DATE
+================================================== */
+
+.wedding-hero-date {
+  margin-top: 24px;
+
+  font-family:
+    var(--font-cormorant),
+    Georgia,
+    serif;
+
+  font-size: 28px;
+  font-weight: 400;
+
+  letter-spacing: 0.18em;
+
+  color: #fffdf8;
+}
+
+.wedding-hero-message {
+  margin-top: 22px;
+
+  font-family:
+    var(--font-cormorant),
+    Georgia,
+    serif;
+
+  font-size: 22px;
+  font-style: italic;
+
+  line-height: 1.65;
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ==================================================
+   15. BOTTOM SCROLL BUTTON
+================================================== */
+
+.wedding-hero-scroll {
+  position: absolute;
+
+  bottom: 35px;
+  left: 50%;
+
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  transform: translateX(-50%);
+
+  text-decoration: none;
+
+  color: white;
+}
+
+.wedding-hero-scroll>span {
+  white-space: nowrap;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  letter-spacing: 0.22em;
+}
+
+.wedding-hero-scroll-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.45);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(10px);
+
+  animation:
+    weddingScrollBounce 2.5s ease-in-out infinite;
+}
+
+@keyframes weddingScrollBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* ==================================================
+   16. BOTTOM GRADIENT
+================================================== */
+
+.wedding-hero-bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 50px;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(to bottom,
+      transparent,
+      rgba(249, 248, 238, 0.15));
+}
+
+/* ==================================================
+   17. TABLET
+================================================== */
+
+@media (max-width: 1024px) {
+  .wedding-header-inner {
+    padding: 0 30px;
+  }
+
+  .wedding-header-nav {
+    gap: 18px;
+  }
+
+  .wedding-header-link {
+    font-size: 10px;
+  }
+
+  .wedding-hero-couple {
+    gap: 20px;
+  }
+
+  .wedding-hero-name {
+    font-size: clamp(80px, 11vw, 125px);
+  }
+}
+
+/* ==================================================
+   18. MOBILE
+================================================== */
+
+@media (max-width: 767px) {
+  .wedding-header-inner {
+    height: 70px;
+    padding: 0 22px;
+  }
+
+  .wedding-header-new--scrolled .wedding-header-inner {
+    height: 64px;
+  }
+
+  .wedding-header-logo {
+    font-size: 36px;
+  }
+
+  .wedding-header-nav {
+    display: none;
+  }
+
+  .wedding-header-menu-button {
+    display: flex;
+  }
+
+  .wedding-hero-new {
+    min-height: 100svh;
+  }
+
+  .wedding-hero-top-decoration {
+    top: 105px;
+  }
+
+  .wedding-hero-content {
+    padding:
+      135px 18px 130px;
+  }
+
+  .wedding-hero-label {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .wedding-hero-label p {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+  }
+
+  .wedding-hero-small-line {
+    width: 24px;
+  }
+
+  .wedding-hero-couple {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .wedding-hero-name {
+    font-size: clamp(90px, 20vw, 125px);
+    line-height: 1.05;
+  }
+
+  .wedding-hero-ampersand {
+    margin: -6px 0;
+  }
+
+  .wedding-hero-ampersand span {
+    font-size: 34px;
+  }
+
+  .wedding-hero-heart {
+    margin-top: 12px;
+  }
+
+  .wedding-hero-date {
+    margin-top: 18px;
+    font-size: 23px;
+  }
+
+  .wedding-hero-message {
+    margin-top: 15px;
+    font-size: 19px;
+  }
+
+  .wedding-hero-scroll {
+    bottom: 24px;
+  }
+}
+
+/* ==================================================
+   19. SMALL MOBILE
+================================================== */
+
+@media (max-width: 380px) {
+  .wedding-hero-name {
+    font-size: 83px;
+  }
+
+  .wedding-hero-content {
+    padding-top: 110px;
+    padding-bottom: 100px;
+  }
+
+  .wedding-hero-message {
+    font-size: 17px;
+  }
+
+  .wedding-hero-date {
+    font-size: 21px;
+  }
+
+  .wedding-hero-top-decoration {
+    top: 88px;
+  }
+}
+
+/* ==================================================
+   20. SHORT SCREENS
+================================================== */
+
+@media (max-height: 650px) {
+  .wedding-hero-content {
+    padding-top: 110px;
+    padding-bottom: 105px;
+  }
+
+  .wedding-hero-scroll {
+    bottom: 15px;
+  }
+}
+
+/* ==================================================
+   21. ACCESSIBILITY
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .wedding-hero-image,
+  .wedding-hero-scroll-icon {
+    animation: none !important;
+  }
+
+  .wedding-hero-content {
+    opacity: 1;
+    transform: none;
+  }
+
+  .wedding-mobile-menu {
+    transition: none;
+  }
+}
+
+
+
+
+@media (hover: hover) and (pointer: fine) {
+
+  html,
+  body,
+  body *,
+  body *::before,
+  body *::after {
+    cursor: url("/heart-cursor.svg") 16 16, auto !important;
+  }
+}
+
+
+/* =========================================
+   WEDDING HEART CURSOR TRAIL
+========================================= */
+
+@keyframes weddingHeartFloat {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+    scale: 0.5;
+  }
+
+  18% {
+    opacity: 0.85;
+    scale: 1;
+  }
+
+  65% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+    translate: 8px -45px;
+    scale: 0.7;
+  }
+}
+
+.wedding-cursor-heart {
+  display: block;
+
+  pointer-events: none;
+  user-select: none;
+
+  line-height: 1;
+
+  text-shadow:
+    0 2px 8px rgba(201, 135, 146, 0.16);
+
+  will-change: translate, opacity, scale;
+
+  animation:
+    weddingHeartFloat 1.15s ease-out forwards;
+}
+
+/* Giảm chuyển động nếu người dùng yêu cầu */
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-cursor-heart {
+    animation: none;
+    display: none;
+  }
+}
+
+
+/* ======================================================
+   NAM & THU - ADMIN LOGIN ANIMATIONS
+====================================================== */
+
+/* ======================================================
+   FLOATING HEARTS
+====================================================== */
+
+.floating-wedding-heart {
+  position: absolute;
+  bottom: -70px;
+
+  display: block;
+
+  pointer-events: none;
+
+  animation-name: wedding-heart-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform;
+}
+
+/* ======================================================
+   HEART RISING ANIMATION
+====================================================== */
+
+@keyframes wedding-heart-rise {
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(var(--heart-rotation, 0deg))
+      scale(0.8);
+  }
+
+  25% {
+    transform:
+      translate3d(
+        var(--heart-drift, 20px),
+        -28vh,
+        0
+      )
+      rotate(12deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(
+        calc(var(--heart-drift, 20px) * -0.45),
+        -57vh,
+        0
+      )
+      rotate(-12deg)
+      scale(1.08);
+  }
+
+  75% {
+    transform:
+      translate3d(
+        var(--heart-drift, 20px),
+        -86vh,
+        0
+      )
+      rotate(8deg)
+      scale(1);
+  }
+
+  100% {
+    transform:
+      translate3d(0, -125vh, 0)
+      rotate(var(--heart-rotation, 0deg))
+      scale(0.85);
+  }
+}
+
+/* ======================================================
+   FLOATING LIGHT PARTICLES
+====================================================== */
+
+.wedding-light-particle {
+  position: absolute;
+  bottom: -30px;
+
+  pointer-events: none;
+
+  animation-name: wedding-particle-rise;
+  animation-duration: 17s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform, opacity;
+}
+
+@keyframes wedding-particle-rise {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.5;
+  }
+
+  80% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate3d(
+      30px,
+      -110vh,
+      0
+    );
+    opacity: 0;
+  }
+}
+
+/* ======================================================
+   ACCESSIBILITY
+====================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-wedding-heart,
+  .wedding-light-particle {
+    animation: none !important;
+    opacity: 0.12;
+    will-change: auto;
+  }
 }

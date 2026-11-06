@@ -6,12 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:init": "tsx scripts/init-db.ts",
+    "db:check": "tsx scripts/check-db.ts",
+    "admin:create": "tsx scripts/create-admin.ts",
+    "admin:reset-password": "tsx scripts/reset-admin-password.ts"
   },
   "dependencies": {
+    "@inquirer/prompts": "^8.7.4",
+    "argon2": "^0.45.1",
+    "dotenv": "^18.0.9",
+    "lucide-react": "^1.61.0",
+    "mongodb": "^6.21.0",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
@@ -21,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
