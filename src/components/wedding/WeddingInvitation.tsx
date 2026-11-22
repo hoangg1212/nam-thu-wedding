@@ -909,7 +909,7 @@ function RefinedEventDate({
       <p className="font-wedding-serif text-[12px] font-medium uppercase tracking-[0.11em] text-[#587589] sm:text-[15px] md:text-[17px]">
         {guestSide === "bride"
           ? "Bữa tiệc chung vui tại tư gia nhà gái"
-          : "Hôn lễ được cử hành tại tư gia nhà trai"}
+          : "Bữa tiệc chung vui tại tư gia nhà trai"}
       </p>
 
       <div className="mx-auto mt-5 grid w-full max-w-[520px] grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-6 md:gap-8">

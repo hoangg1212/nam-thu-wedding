@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -12,20 +11,17 @@ import {
   type GuestSide,
 } from "@/data/wedding";
 
-import {
-  useWedding,
-} from "@/components/providers/WeddingProvider";
+import { useWedding } from "@/components/providers/WeddingProvider";
 
 // ======================================================
 // NAM & THU - INVITATION COVER
 //
-// GIAO DIỆN:
-// - Ảnh nền giữ nguyên màu gốc.
-// - Không phủ đen toàn màn hình.
-// - Không có khung nền đen sau chữ.
-// - Không sử dụng backdrop-blur.
-// - Chữ trắng kem, có bóng nhẹ để dễ đọc.
-// - Phong cách nhẹ nhàng, thanh lịch.
+// CẬP NHẬT:
+// - Toàn bộ chữ nội dung chuyển sang màu trắng.
+// - Tăng độ rõ của chữ bằng text-shadow mạnh hơn.
+// - Thêm lớp phủ tối nhẹ trên mobile để chữ nổi hơn.
+// - Giữ bố cục và hiệu ứng mở thiệp.
+// - Giữ nút "Mở thiệp" với chữ đậm vì nền nút sáng.
 //
 // GIỮ NGUYÊN:
 // - Link thiệp cá nhân hóa.
@@ -43,28 +39,28 @@ interface InvitationCoverProps {
 
 // ======================================================
 // TEXT STYLE
-//
-// Chỉ sử dụng bóng chữ vừa phải.
-// Không tạo nền tối bao quanh nội dung.
 // ======================================================
 
 const NAME_STYLE = {
-  color: "#FFF9ED",
+  color: "#FFFFFF",
   textShadow:
-    "0 2px 3px rgba(0,0,0,0.55), " +
-    "0 5px 14px rgba(0,0,0,0.38)",
+    "0 2px 4px rgba(0,0,0,0.72), " +
+    "0 6px 18px rgba(0,0,0,0.52), " +
+    "0 0 1px rgba(255,255,255,0.18)",
 };
 
 const TEXT_STYLE = {
+  color: "#FFFFFF",
   textShadow:
-    "0 1px 3px rgba(0,0,0,0.65), " +
-    "0 3px 9px rgba(0,0,0,0.32)",
+    "0 1px 3px rgba(0,0,0,0.82), " +
+    "0 3px 10px rgba(0,0,0,0.55)",
 };
 
 const SOFT_STYLE = {
+  color: "#FFFFFF",
   textShadow:
-    "0 1px 3px rgba(0,0,0,0.50), " +
-    "0 2px 7px rgba(0,0,0,0.25)",
+    "0 1px 3px rgba(0,0,0,0.76), " +
+    "0 2px 8px rgba(0,0,0,0.48)",
 };
 
 // ======================================================
@@ -88,10 +84,10 @@ function FingerprintHeart() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <g
-          stroke="#F2B5C1"
+          stroke="#F7D8DE"
           strokeWidth="1.4"
           strokeLinecap="round"
-          opacity="0.95"
+          opacity="0.98"
         >
           <path d="M57 51 C42 44 30 34 30 22 C30 14 35 9 42 9 C50 9 55 15 57 22" />
           <path d="M54 47 C42 41 34 32 34 23 C34 17 37 13 42 13 C48 13 52 18 54 25" />
@@ -100,10 +96,10 @@ function FingerprintHeart() {
         </g>
 
         <g
-          stroke="#F2B5C1"
+          stroke="#F7D8DE"
           strokeWidth="1.4"
           strokeLinecap="round"
-          opacity="0.95"
+          opacity="0.98"
         >
           <path d="M63 51 C78 44 90 34 90 22 C90 14 85 9 78 9 C70 9 65 15 63 22" />
           <path d="M66 47 C78 41 86 32 86 23 C86 17 83 13 78 13 C72 13 68 18 66 25" />
@@ -113,7 +109,7 @@ function FingerprintHeart() {
 
         <path
           d="M57 22 C59 27 59 31 60 37 C61 31 61 27 63 22"
-          stroke="#FFE2E7"
+          stroke="#FFFFFF"
           strokeWidth="1.3"
         />
       </svg>
@@ -129,11 +125,7 @@ export default function InvitationCover({
   guestName: providedGuestName,
   guestSide: providedGuestSide,
 }: InvitationCoverProps) {
-  const {
-    invitationOpened,
-    finishInvitation,
-    playMusic,
-  } = useWedding();
+  const { invitationOpened, finishInvitation, playMusic } = useWedding();
 
   const searchParams = useSearchParams();
 
@@ -143,11 +135,7 @@ export default function InvitationCover({
 
   const side: GuestSide =
     providedGuestSide ??
-    (
-      searchParams.get("side") === "bride"
-        ? "bride"
-        : "groom"
-    );
+    (searchParams.get("side") === "bride" ? "bride" : "groom");
 
   // ====================================================
   // TÊN KHÁCH
@@ -155,13 +143,8 @@ export default function InvitationCover({
 
   const guestName =
     providedGuestName !== undefined
-      ? providedGuestName.trim().slice(0, 120) ||
-        "Quý khách"
-      : searchParams
-          .get("guest")
-          ?.trim()
-          .slice(0, 100) ||
-        "Quý khách";
+      ? providedGuestName.trim().slice(0, 120) || "Quý khách"
+      : searchParams.get("guest")?.trim().slice(0, 100) || "Quý khách";
 
   const event = getWeddingLocation(side);
 
@@ -171,10 +154,7 @@ export default function InvitationCover({
 
   const [opening, setOpening] = useState(false);
 
-  const timerRef =
-    useRef<ReturnType<typeof setTimeout> | null>(
-      null
-    );
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -195,10 +175,8 @@ export default function InvitationCover({
 
     setOpening(true);
 
-    // Nhạc chỉ phát sau khi người dùng tương tác.
     void playMusic();
 
-    // Giữ nguyên hiệu ứng mở thiệp.
     timerRef.current = setTimeout(() => {
       finishInvitation();
     }, 900);
@@ -228,13 +206,7 @@ export default function InvitationCover({
         }
       `}
     >
-      {/* ================================================
-          BACKGROUND MOBILE
-
-          Hiển thị ảnh gốc.
-          Không làm mờ hoặc chỉnh độ trong suốt.
-      ================================================ */}
-
+      {/* BACKGROUND MOBILE */}
       <div className="pointer-events-none fixed inset-0 md:hidden">
         <Image
           src="/images/invitation-cover-mobile.png"
@@ -246,10 +218,16 @@ export default function InvitationCover({
         />
       </div>
 
-      {/* ================================================
-          BACKGROUND DESKTOP
-      ================================================ */}
+      {/* LỚP PHỦ TỐI NHẸ CHO MOBILE ĐỂ CHỮ DỄ ĐỌC HƠN */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none fixed inset-0 z-[1] md:hidden
+          bg-[linear-gradient(to_bottom,rgba(70,0,0,0.16),rgba(70,0,0,0.10)_28%,rgba(40,0,0,0.16)_60%,rgba(20,0,0,0.22))]
+        "
+      />
 
+      {/* BACKGROUND DESKTOP */}
       <div className="pointer-events-none fixed inset-0 hidden md:block">
         <Image
           src="/images/invitation-cover-desktop.jpg"
@@ -261,12 +239,7 @@ export default function InvitationCover({
         />
       </div>
 
-      {/* ================================================
-          TRANG TRÍ VIỀN
-
-          Không phủ thêm màu lên ảnh nền.
-      ================================================ */}
-
+      {/* TRANG TRÍ VIỀN */}
       <div
         aria-hidden="true"
         className="
@@ -287,13 +260,7 @@ export default function InvitationCover({
         "
       />
 
-      {/* ================================================
-          MAIN CONTENT
-
-          Không có nền đen phía sau chữ.
-          Khi màn hình thấp, nội dung có thể cuộn.
-      ================================================ */}
-
+      {/* MAIN CONTENT */}
       <div
         className={`
           relative z-10 mx-auto flex
@@ -319,15 +286,14 @@ export default function InvitationCover({
           "
         >
           {/* TOP LABEL */}
-
           <div className="mb-3 flex items-center justify-center gap-3 sm:mb-6">
-            <span className="h-px w-7 bg-[#F3DCAA]/85 sm:w-8" />
+            <span className="h-px w-7 bg-white/75 sm:w-8" />
 
             <p
               className="
                 text-[10px] font-semibold
                 uppercase tracking-[0.26em]
-                text-[#FFF8E9]
+                text-white
                 sm:text-[11px]
               "
               style={TEXT_STYLE}
@@ -335,16 +301,15 @@ export default function InvitationCover({
               Ngày chung đôi
             </p>
 
-            <span className="h-px w-7 bg-[#F3DCAA]/85 sm:w-8" />
+            <span className="h-px w-7 bg-white/75 sm:w-8" />
           </div>
 
           {/* CHÚ RỂ */}
-
           <p
             className="
               text-[10px] font-semibold
               uppercase tracking-[0.30em]
-              text-[#FFD5DD]
+              text-white
               sm:text-[11px]
             "
             style={TEXT_STYLE}
@@ -368,15 +333,14 @@ export default function InvitationCover({
           </h1>
 
           {/* KÝ HIỆU & */}
-
           <div className="my-1 flex items-center justify-center gap-4">
-            <span className="h-px w-8 bg-[#F3DCAA]/75" />
+            <span className="h-px w-8 bg-white/70" />
 
             <span
               className="
                 font-wedding-serif
                 text-[22px] italic
-                text-[#FFE4B0]
+                text-white
                 sm:text-[25px]
               "
               style={SOFT_STYLE}
@@ -384,16 +348,15 @@ export default function InvitationCover({
               &
             </span>
 
-            <span className="h-px w-8 bg-[#F3DCAA]/75" />
+            <span className="h-px w-8 bg-white/70" />
           </div>
 
           {/* CÔ DÂU */}
-
           <p
             className="
               text-[10px] font-semibold
               uppercase tracking-[0.30em]
-              text-[#FFD5DD]
+              text-white
               sm:text-[11px]
             "
             style={TEXT_STYLE}
@@ -417,27 +380,24 @@ export default function InvitationCover({
           </h1>
 
           {/* TRÁI TIM */}
-
           <div className="mt-2 sm:mt-3">
             <FingerprintHeart />
           </div>
 
           {/* NGÀY CƯỚI */}
-
           <p
             className="
               font-wedding-serif
               mt-2 break-words
               text-[14px] font-semibold
               leading-6 tracking-[0.04em]
-              text-[#FFF9ED]
+              text-white
               sm:text-[20px]
               sm:tracking-[0.08em]
             "
             style={TEXT_STYLE}
           >
-            {event.weekdayLabel},{" "}
-            {formatWeddingDate(event.eventDate)}
+            {event.weekdayLabel}, {formatWeddingDate(event.eventDate)}
           </p>
 
           <p
@@ -445,7 +405,7 @@ export default function InvitationCover({
               font-wedding-serif
               mt-1 text-[17px]
               font-medium italic
-              leading-6 text-[#FFD5DD]
+              leading-6 text-white
               sm:mt-2 sm:text-[23px]
             "
             style={TEXT_STYLE}
@@ -458,7 +418,7 @@ export default function InvitationCover({
               className="
                 font-wedding-serif
                 mt-1 text-[15px]
-                font-medium text-[#FFF9ED]
+                font-medium text-white
                 sm:text-[17px]
               "
               style={TEXT_STYLE}
@@ -468,27 +428,22 @@ export default function InvitationCover({
           )}
 
           {/* ĐƯỜNG PHÂN CÁCH */}
-
           <div className="my-3 flex items-center justify-center gap-3 sm:my-5">
-            <span className="h-px w-10 bg-[#F3DCAA]/80" />
+            <span className="h-px w-10 bg-white/75" />
 
-            <span
-              className="text-[#FFD5DD]"
-              style={SOFT_STYLE}
-            >
+            <span className="text-white" style={SOFT_STYLE}>
               ♡
             </span>
 
-            <span className="h-px w-10 bg-[#F3DCAA]/80" />
+            <span className="h-px w-10 bg-white/75" />
           </div>
 
           {/* LỜI MỜI */}
-
           <p
             className="
               font-wedding-serif
               text-[16px] font-medium
-              leading-6 text-[#FFF9ED]
+              leading-6 text-white
               sm:text-[21px]
             "
             style={TEXT_STYLE}
@@ -497,7 +452,6 @@ export default function InvitationCover({
           </p>
 
           {/* TÊN KHÁCH */}
-
           <h2
             className="
               font-wedding-serif
@@ -506,7 +460,7 @@ export default function InvitationCover({
               whitespace-normal break-words
               text-[clamp(1.65rem,7vw,2.1rem)]
               font-semibold leading-[1.25]
-              text-[#FFE7B8]
+              text-white
               [overflow-wrap:anywhere]
               sm:text-[39px]
             "
@@ -516,23 +470,20 @@ export default function InvitationCover({
           </h2>
 
           {/* NỘI DUNG */}
-
           <p
             className="
               font-wedding-serif
               mx-auto max-w-[470px]
               text-[15px] font-medium
-              leading-[1.65] text-[#FFF9ED]
+              leading-[1.65] text-white
               sm:text-[20px] sm:leading-7
             "
             style={TEXT_STYLE}
           >
-            đến chung vui và sẻ chia niềm hạnh phúc
-            cùng gia đình chúng mình.
+            đến chung vui và sẻ chia niềm hạnh phúc cùng gia đình chúng mình.
           </p>
 
           {/* NÚT MỞ THIỆP */}
-
           <button
             type="button"
             onClick={handleOpen}
@@ -561,11 +512,7 @@ export default function InvitationCover({
               sm:mt-7 sm:min-h-[54px]
             "
           >
-            <span>
-              {opening
-                ? "Đang mở thiệp"
-                : "Mở thiệp"}
-            </span>
+            <span>{opening ? "Đang mở thiệp" : "Mở thiệp"}</span>
 
             <span
               aria-hidden="true"
@@ -576,13 +523,12 @@ export default function InvitationCover({
           </button>
 
           {/* LỜI NHẮN CUỐI */}
-
           <p
             className="
               font-wedding-serif
               mt-3 text-[12px]
               italic leading-5
-              text-[#FFF9ED]
+              text-white
               sm:mt-4 sm:text-[13px]
             "
             style={SOFT_STYLE}
