@@ -182,8 +182,8 @@ export function isValidWishMessage(
   const cleaned = value.trim();
 
   return (
-    Array.from(cleaned).length >= 2 &&
-    Array.from(cleaned).length <= 500 &&
+    cleaned.length >= 2 &&
+    cleaned.length <= 10000 &&
     !containsInvalidControlCharacters(cleaned)
   );
 }

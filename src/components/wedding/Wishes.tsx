@@ -86,19 +86,19 @@ const RSVP_OPTIONS: {
   value: RsvpStatus;
   label: string;
 }[] = [
-  {
-    value: "attending",
-    label: "Xác nhận tham dự",
-  },
-  {
-    value: "declined",
-    label: "Không thể tham dự",
-  },
-  {
-    value: "unsure",
-    label: "Chưa chắc chắn",
-  },
-];
+    {
+      value: "attending",
+      label: "Xác nhận tham dự",
+    },
+    {
+      value: "declined",
+      label: "Không thể tham dự",
+    },
+    {
+      value: "unsure",
+      label: "Chưa chắc chắn",
+    },
+  ];
 
 // ======================================================
 // WEDDING RINGS
@@ -832,11 +832,11 @@ function WishesForm({
     // Nội dung lời chúc.
     if (
       cleanedMessage.length < 2 ||
-      cleanedMessage.length > 500
+      cleanedMessage.length > 10000
     ) {
       return (
         "Vui lòng nhập lời chúc " +
-        "từ 2 đến 500 ký tự."
+        "từ 2 đến 10.000 ký tự."
       );
     }
 
@@ -941,7 +941,7 @@ function WishesForm({
       ) {
         throw new Error(
           result.message ||
-            "Không thể gửi lời chúc lúc này."
+          "Không thể gửi lời chúc lúc này."
         );
       }
 
@@ -956,7 +956,7 @@ function WishesForm({
 
       setFeedback(
         result.message ||
-          "Nam và Thư đã nhận được lời chúc và xác nhận tham dự của bạn."
+        "Nam và Thư đã nhận được lời chúc và xác nhận tham dự của bạn."
       );
 
       setMessage("");
@@ -1196,17 +1196,15 @@ function WishesForm({
                     px-4 py-3
                     transition-all duration-300
 
-                    ${
-                      selected
-                        ? "border-[#B8A27D]/65 bg-[#F8F4EA]/85"
-                        : "border-[#7A9CAC]/25 bg-white/45 hover:border-[#B8A27D]/55 hover:bg-white/70"
+                    ${selected
+                      ? "border-[#B8A27D]/65 bg-[#F8F4EA]/85"
+                      : "border-[#7A9CAC]/25 bg-white/45 hover:border-[#B8A27D]/55 hover:bg-white/70"
                     }
 
-                    ${
-                      isSubmitting ||
+                    ${isSubmitting ||
                       loadingSavedRsvp
-                        ? "cursor-wait opacity-60"
-                        : ""
+                      ? "cursor-wait opacity-60"
+                      : ""
                     }
                   `}
                 >
@@ -1241,10 +1239,9 @@ function WishesForm({
                       justify-center rounded-[6px]
                       border transition-all duration-300
 
-                      ${
-                        selected
-                          ? "border-[#31566B] bg-[#31566B] text-white"
-                          : "border-[#9BAEB1] bg-white/80 text-transparent"
+                      ${selected
+                        ? "border-[#31566B] bg-[#31566B] text-white"
+                        : "border-[#9BAEB1] bg-white/80 text-transparent"
                       }
 
                       group-focus-within:ring-2
@@ -1263,10 +1260,9 @@ function WishesForm({
                       text-[15px] leading-6
                       sm:text-[16px]
 
-                      ${
-                        selected
-                          ? "font-medium text-[#31566B]"
-                          : "text-[#61726D]"
+                      ${selected
+                        ? "font-medium text-[#31566B]"
+                        : "text-[#61726D]"
                       }
                     `}
                   >
@@ -1310,7 +1306,7 @@ function WishesForm({
             name="message"
             required
             minLength={2}
-            maxLength={500}
+            maxLength={10000}
             rows={5}
             value={message}
             disabled={isSubmitting}
@@ -1359,7 +1355,7 @@ function WishesForm({
                 text-[#587589]/70
               "
             >
-              {message.length}/500
+              {message.length}/10000
             </span>
           </div>
         </div>
@@ -1383,10 +1379,9 @@ function WishesForm({
               text-[13px] leading-6
               sm:text-[14px]
 
-              ${
-                status === "success"
-                  ? "border-[#9CC8AF]/45 bg-[#EBF6EE]/80 text-[#4A7765]"
-                  : "border-[#DDA7A8]/45 bg-[#FFF0F0]/80 text-[#B15C64]"
+              ${status === "success"
+                ? "border-[#9CC8AF]/45 bg-[#EBF6EE]/80 text-[#4A7765]"
+                : "border-[#DDA7A8]/45 bg-[#FFF0F0]/80 text-[#B15C64]"
               }
             `}
           >

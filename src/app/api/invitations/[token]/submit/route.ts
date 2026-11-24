@@ -96,7 +96,7 @@ interface ResolvedInvitation {
 // CONSTANTS
 // ======================================================
 
-const MAX_BODY_BYTES = 4096;
+const MAX_BODY_BYTES = 128 * 1024;
 
 const MAX_ROUTE_LENGTH = 160;
 
