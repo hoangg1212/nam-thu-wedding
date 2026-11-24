@@ -245,7 +245,7 @@ export const wedding: WeddingData = {
       mapUrl: "",
       time: "",
       eventDate: "2026-12-26",
-      eventTitle: "Bữa tiệc chung vui",
+      eventTitle: "Lễ Vu Quy",
       weekdayLabel: "Thứ Bảy",
     },
 
@@ -256,7 +256,7 @@ export const wedding: WeddingData = {
       mapUrl: "",
       time: "",
       eventDate: "2026-12-27",
-      eventTitle: "Lễ thành hôn",
+      eventTitle: "Lễ Tân Hôn",
       weekdayLabel: "Chủ nhật",
     },
   },

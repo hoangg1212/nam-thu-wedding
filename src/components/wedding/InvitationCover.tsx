@@ -529,6 +529,7 @@ export default function InvitationCover({
               mt-3 text-[12px]
               italic leading-5
               text-white
+              
               sm:mt-4 sm:text-[13px]
             "
             style={SOFT_STYLE}
